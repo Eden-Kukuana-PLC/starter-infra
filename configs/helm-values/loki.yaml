@@ -42,7 +42,7 @@ deploymentMode: SingleBinary
 singleBinary:
   replicas: 1
   persistence:
-    storageClass: hostpath
+    storageClass: default
 
 chunksCache:
   # -- Specifies whether memcached based chunks-cache should be enabled
