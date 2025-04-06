@@ -88,9 +88,27 @@ query_scheduler:
 
 #
 #
-#store_gateway:
-#  enabled: false
-#  replicas: 0
+store_gateway:
+  enabled: true
+  replicas: 2
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+ingester:
+  enabled: true
+  replicas: 2
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
 #
 #nginx:
 #  enabled: true
