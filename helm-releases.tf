@@ -99,7 +99,7 @@ resource "helm_release" "postgres-operator" {
   create_namespace = true
 
   values = [yamlencode({
-    replicas = 3
+    replicas = 1
   })]
 }
 
