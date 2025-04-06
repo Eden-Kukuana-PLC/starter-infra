@@ -1,0 +1,91 @@
+replicas: 1
+
+env:
+  GF_AUTH_ANONYMOUS_ENABLED: true
+
+adminUser: admin
+adminPassword: admin
+
+admin:
+  ## Name of the secret. Can be templated.
+  userKey: admin-user
+  passwordKey: admin-password
+
+persistence:
+  type: pvc
+  enabled: true
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Loki
+        uid: loki
+        type: loki
+        access: proxy
+        url: http://loki-gateway.monitoring.svc.cluster.local:80
+        jsonData:
+          derivedFields:
+            - datasourceUid: tempo
+              matcherRegex: "[tT]race_?[iI][dD]"
+              name: traceId (field)
+              matcherType: label
+              url: '$${__value.raw}'
+            - datasourceUid: tempo
+              matcherRegex: "[tT]race_?[iI][dD][\"']?[:=][\"']?(\\w+)"
+              name: traceId
+              url: '$${__value.raw}'
+      - name: Mimir
+        type: prometheus
+        uid: mimir
+        access: proxy
+        orgId: 1
+        url: http://mimir-nginx.monitoring.svc.cluster.local:80/prometheus
+        basicAuth: false
+        isDefault: false
+        version: 1
+        editable: false
+        jsonData:
+          httpMethod: GET
+  #
+      - name: Tempo
+        type: tempo
+        access: proxy
+        orgId: 1
+        url: http://tempo.monitoring.svc.cluster.local:3100
+        basicAuth: false
+        isDefault: true
+        version: 1
+        editable: true
+        apiVersion: 1
+        uid: tempo
+        jsonData:
+          httpMethod: GET
+          nodeGraph:
+            enabled: true
+          serviceMap:
+            datasourceUid: mimir
+          lokiSearch:
+            datasourceUid: "loki"
+          spanBar:
+            type: "Tag"
+            tag: "http.path"
+          tracesToLogsV2:
+            # Field with an internal link pointing to a logs data source in Grafana.
+            # datasourceUid value must match the uid value of the logs data source.
+            datasourceUid: "loki"
+            spanStartTimeShift: "1h"
+            spanEndTimeShift: "-1h"
+            filterByTraceID: true
+            filterBySpanID: true
+            tags: [ { key: "service.name", value: "job" } ]
+          tracesToMetrics:
+            datasourceUid: "mimir"
+            spanStartTimeShift: "1h"
+            spanEndTimeShift: "-1h"
+            tags: [ { key: "service.name", value: "service" }, { key: "job" } ]
+            queries:
+              - name: "Sample query"
+                query: "sum(rate(traces_spanmetrics_latency_bucket{$__tags}[5m]))"
+
+

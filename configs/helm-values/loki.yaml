@@ -1,0 +1,145 @@
+loki:
+  auth_enabled: false
+  commonConfig:
+    replication_factor: 1
+  limits_config:
+    reject_old_samples: true
+    reject_old_samples_max_age: 168h
+    max_cache_freshness_per_query: 10m
+    split_queries_by_interval: 15m
+    query_timeout: 300s
+    volume_enabled: true
+  storage:
+    type: s3
+    bucketNames:
+      chunks:
+      index:
+      ruler:
+    s3:
+      endpoint:
+      accessKeyId:
+      secretAccessKey:
+      s3ForcePathYtyle: true
+  schemaConfig:
+    configs:
+      - from: 2024-04-01
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  pattern_ingester:
+    enabled: true
+  ruler:
+    enable_api: true
+
+minio:
+  enabled: false
+
+deploymentMode: SingleBinary
+
+singleBinary:
+  replicas: 1
+  persistence:
+    storageClass: hostpath
+
+chunksCache:
+  # -- Specifies whether memcached based chunks-cache should be enabled
+  enabled: false
+
+lokiCanary:
+  enabled: false
+
+test:
+  enabled: false
+
+resultsCache:
+  # -- Specifies whether memcached based results-cache should be enabled
+  enabled: false
+
+# Zero out replica counts of other deployment modes
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+indexGateway:
+  replicas: 0
+bloomCompactor:
+  replicas: 0
+bloomGateway:
+  replicas: 0
+#loki:
+#
+#  ingester:
+#    chunk_encoding: snappy
+#  querier:
+#    # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
+#    max_concurrent: 2
+#  pattern_ingester:
+#    enabled: true
+#
+#  schema_config:
+#    configs:
+#      - from: 2023-01-01
+#        store: tsdb
+#        object_store: s3
+#        schema: v13
+#        index:
+#          prefix: index_
+#          period: 24h
+#  common:
+#    path_prefix: /loki
+#    replication_factor: 1
+#    storage:
+#      type: s3
+#      s3:
+#        endpoint: https://eu-central-1.linodeobjects.com
+#        bucketnames: uplanit-loki
+#        access_key_id: Z4PQ0JC5V394ECPKGBSN
+#        secret_access_key: aQvwIEENuWlkqqlvK9OCbcL0ll3gPZ5qnXy6uGs4
+#        s3forcepathstyle: true
+#  ruler:
+#    storage:
+#      s3:
+#        bucketnames: loki-ruler
+#
+#deploymentMode: SimpleScalable
+
+# Disable minio storage
+#minio:
+#  enabled: false
+#
+#backend:
+#  replicas: 1
+#  autoscaling:
+#    enabled: true
+#    minReplicas: 1
+#    maxReplicas: 3
+#read:
+#  replicas: 1
+#  autoscaling:
+#    enabled: true
+#    minReplicas: 1
+#    maxReplicas: 3
+#write:
+#  replicas: 2
+#  autoscaling:
+#    enabled: true
+#    minReplicas: 2
+#    maxReplicas: 3

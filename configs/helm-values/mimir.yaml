@@ -1,0 +1,141 @@
+# These values configure the Grafana Mimir or Grafana Enterprise Metrics cluster
+# for a more production-ready setup. The setup targets 70% CPU and memory utilization
+# so that the cluster has room to grow. The resource requests and limits reflect 100% utilization.
+# This is useful when you want to strictly control costs when purchasing GEM through a marketplace subscription for example.
+# limits==requests also ensure a "Guaranteed" QoS: https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/.
+# Note that setting CPU limits has some known issues:
+# https://engineering.indeedblog.com/blog/2019/12/unthrottled-fixing-cpu-limits-in-the-cloud/.
+#
+# These values are suitable for ingestion of ~1M series and scrape interval of 15s.
+# This implies ingestion rate of around 66000 samples per second.
+#
+# Query requirements can vary dramatically depending on query rate and query
+# ranges. The values here satisfy a "usual" query load of around 5 queries per second
+# as seen from our production clusters at this scale.
+#
+# The values in this file also add podAntiAffinity rules for ingesters and store-gateways.
+# The rules ensure that the replicas of the same component are not scheduled on the same
+# Kubernetes Node. Zone-aware replication is enabled by default on new installation.
+# Refer to [Migrate from single zone to zone-aware replication with Helm](https://grafana.com/docs/mimir/latest/migration-guide/migrating-from-single-zone-with-helm) and
+# [Zone-Aware Replication](https://grafana.com/docs/mimir/latest/configure/configure-zone-aware-replication/)
+# for more information.
+#
+# MinIO is no longer enabled, and you are encouraged to use your cloud providers
+# object storage service such as S3 or GCS.
+
+# Using external s3 storage so minio is disabled as well
+minio:
+  enabled: false
+
+#multitenancy_enabled: false
+
+
+# Optional components (All disabled)
+alertmanager:
+  enabled: false
+  replicas: 0
+
+ruler:
+  enabled: false
+  replicas: 0
+
+overrides_exporter:
+  enabled: false
+  replicas: 0
+
+query_scheduler:
+  enabled: false
+  replicas: 0
+#
+#compactor:
+#  enabled: true
+#  replicas: 1
+#
+#distributor:
+#  enabled: true
+#  replicas: 1
+#
+#ingester:
+#  enabled: false
+#  replicas: 0
+#
+#admin-cache:
+#  enabled: false
+#  replicas: 0
+#
+#chunks-cache:
+#  enabled: false
+#  replicas: 0
+#
+#index-cache:
+#  enabled: false
+#  replicas: 0
+#
+#metadata-cache:
+#  enabled: false
+#
+#results-cache:
+#  enabled: false
+#
+
+#querier:
+#  enabled: true
+#  replicas: 1
+#
+#query_frontend:
+#  enabled: true
+#  replicas: 1
+
+#
+#
+#store_gateway:
+#  enabled: false
+#  replicas: 0
+#
+#nginx:
+#  enabled: true
+#  replicas: 1
+#
+## Grafana Enterprise Metrics feature related
+#admin_api:
+#  enabled: false
+#  replicas: 0
+#
+#gateway:
+#  enabled: true
+#  replicas: 2
+#
+#usage_stats:
+#  enabled: false
+
+
+#rollout_operator:
+#  enabled: true
+#  replicas: 1
+
+mimir:
+  target: all
+  structuredConfig:
+    target: all
+    common:
+      storage:
+        backend: s3
+        s3:
+          bucket_name:
+          endpoint:
+          access_key_id:
+          secret_access_key:
+
+    ruler_storage:
+      s3:
+        bucket_name:
+
+
+    blocks_storage:
+      s3:
+        bucket_name:
+
+    alertmanager_storage:
+      s3:
+        bucket_name:
+

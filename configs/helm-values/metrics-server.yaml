@@ -1,0 +1,5 @@
+metrics:
+  enabled: true
+
+args:
+  - "--kubelet-insecure-tls"

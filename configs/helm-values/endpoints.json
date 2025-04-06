@@ -1,0 +1,31 @@
+{
+  "metrics": {
+    "url": "http://mimir-nginx.monitoring.svc.cluster.local:80/api/v1/push",
+    "basicAuth": {
+      "username": "",
+      "password": ""
+    }
+  },
+  "logs": {
+    "url": "http://loki-gateway.monitoring.svc.cluster.local:80/loki/api/v1/push",
+    "basicAuth": {
+      "username": "",
+      "password": ""
+    }
+  },
+  "traces": {
+    "url": "http://tempo.monitoring.svc.cluster.local:4317",
+    "basicAuthToken": "",
+    "tls": {
+      "insecure": true,
+      "insecureSkipVerify": true
+    }
+  },
+  "profiles": {
+    "url": "http://pyroscope:4040",
+    "basicAuth": {
+      "username": "",
+      "password": ""
+    }
+  }
+}
