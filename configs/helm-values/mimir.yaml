@@ -47,17 +47,27 @@ query_scheduler:
   enabled: false
   replicas: 0
 #
-#compactor:
-#  enabled: true
-#  replicas: 1
-#
-#distributor:
-#  enabled: true
-#  replicas: 1
-#
-#ingester:
-#  enabled: false
-#  replicas: 0
+compactor:
+  enabled: true
+  replicas: 1
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+distributor:
+  enabled: true
+  replicas: 1
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
 #
 #admin-cache:
 #  enabled: false
