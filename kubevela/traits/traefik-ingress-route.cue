@@ -64,7 +64,7 @@ template: {
 		}
 		spec: {
 			name: parameter.name
-			entryPoints: "web"
+			entryPoints: ["web"]
 			routes: [
 				for route in parameter.routes {
 					kind: route.kind
