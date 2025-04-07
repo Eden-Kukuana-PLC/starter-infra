@@ -171,54 +171,54 @@ resource "helm_release" "alloy" {
   values = [file("${path.module}/configs/helm-values/alloy.yaml")]
 }
 
-resource "helm_release" "mimir" {
-  name             = "mimir"
-  repository       = "https://grafana.github.io/helm-charts"
-  chart            = "mimir-distributed"
-  namespace        = "monitoring"
-  create_namespace = true
-  version          = "5.6.0"
-
-  values           = [file("${path.module}/configs/helm-values/mimir.yaml")]
-
-  set {
-    name  = "mimir.structuredConfig.common.storage.s3.bucket_name"
-    value = var.s3_bucket_mimir
-  }
-
-  set {
-    name  = "mimir.structuredConfig.common.storage.s3.access_key_id"
-    value = var.s3_access_key_monitoring
-  }
-
-  set {
-    name  = "mimir.structuredConfig.common.storage.s3.secret_access_key"
-    value = var.s3_secret_key_monitoring
-  }
-
-  set {
-    name  = "mimir.structuredConfig.common.storage.s3.endpoint"
-    value = var.s3_endpoint
-  }
-
-  # Overwrite additional bucket for Mimir's ruler storage
-  set {
-    name  = "mimir.structuredConfig.ruler_storage.s3.bucket_name"
-    value = var.s3_bucket_ruler_storage
-  }
-
-  # Overwrite additional bucket for Mimir's blocks storage
-  set {
-    name  = "mimir.structuredConfig.blocks_storage.s3.bucket_name"
-    value = var.s3_bucket_mimir
-  }
-
-  set {
-    name  = "mimir.structuredConfig.alertmanager_storage.s3.bucket_name"
-    value = var.s3_bucket_alertmanager_storage
-  }
-
-}
+# resource "helm_release" "mimir" {
+#   name             = "mimir"
+#   repository       = "https://grafana.github.io/helm-charts"
+#   chart            = "mimir-distributed"
+#   namespace        = "monitoring"
+#   create_namespace = true
+#   version          = "5.6.0"
+#
+#   values           = [file("${path.module}/configs/helm-values/mimir.yaml")]
+#
+#   set {
+#     name  = "mimir.structuredConfig.common.storage.s3.bucket_name"
+#     value = var.s3_bucket_mimir
+#   }
+#
+#   set {
+#     name  = "mimir.structuredConfig.common.storage.s3.access_key_id"
+#     value = var.s3_access_key_monitoring
+#   }
+#
+#   set {
+#     name  = "mimir.structuredConfig.common.storage.s3.secret_access_key"
+#     value = var.s3_secret_key_monitoring
+#   }
+#
+#   set {
+#     name  = "mimir.structuredConfig.common.storage.s3.endpoint"
+#     value = var.s3_endpoint
+#   }
+#
+#   # Overwrite additional bucket for Mimir's ruler storage
+#   set {
+#     name  = "mimir.structuredConfig.ruler_storage.s3.bucket_name"
+#     value = var.s3_bucket_ruler_storage
+#   }
+#
+#   # Overwrite additional bucket for Mimir's blocks storage
+#   set {
+#     name  = "mimir.structuredConfig.blocks_storage.s3.bucket_name"
+#     value = var.s3_bucket_mimir
+#   }
+#
+#   set {
+#     name  = "mimir.structuredConfig.alertmanager_storage.s3.bucket_name"
+#     value = var.s3_bucket_alertmanager_storage
+#   }
+#
+# }
 
 resource "helm_release" "tempo" {
   name             = "tempo"
