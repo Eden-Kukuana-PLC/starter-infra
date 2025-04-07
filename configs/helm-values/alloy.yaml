@@ -1,3 +1,7 @@
+controller:
+  replicas: 1
+  type: 'deployment'
+
 alloy:
   extraPorts:
     - name: grpc-otel
