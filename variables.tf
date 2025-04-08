@@ -98,3 +98,65 @@ variable "s3_bucket_alertmanager_storage" {
   type        = string
 }
 
+
+
+variable "namespace" {
+  type    = string
+  default = "monitoring"
+}
+
+variable "cluster_name" {
+  type    = string
+}
+
+variable "destinations_prometheus_url" {
+  type    = string
+}
+
+variable "destinations_prometheus_username" {
+  type    = string
+}
+
+variable "destinations_prometheus_password" {
+  type    = string
+}
+
+variable "destinations_loki_url" {
+  type    = string
+}
+
+variable "destinations_loki_username" {
+  type    = string
+}
+
+variable "destinations_loki_password" {
+  type    = string
+}
+
+variable "destinations_otlp_url" {
+  type    = string
+  default = "https://tempo-prod-10-prod-eu-west-2.grafana.net:443"
+}
+
+variable "destinations_otlp_username" {
+  type    = string
+  default = "1115171"
+}
+
+variable "destinations_otlp_password" {
+  type    = string
+}
+
+variable "fleetmanagement_url" {
+  type    = string
+  default = "https://fleet-management-prod-011.grafana.net"
+}
+
+variable "fleetmanagement_username" {
+  type    = string
+  default = "1163057"
+}
+
+variable "fleetmanagement_password" {
+  type    = string
+}
