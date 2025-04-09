@@ -120,6 +120,21 @@ resource "helm_release" "grafana-k8s-monitoring" {
   }
 
   set {
+    name  = "alloy-metrics.controller.replicas"
+    value = "1" # Ensure the value is quoted to be interpreted as a string
+  }
+
+  set {
+    name  = "alloy-singleton.controller.replicas"
+    value = "1"
+  }
+
+  set {
+    name  = "alloy-logs.controller.replicas"
+    value = "1"
+  }
+
+  set {
     name  = "destinations[0].url"
     value = var.destinations_prometheus_url
   }
