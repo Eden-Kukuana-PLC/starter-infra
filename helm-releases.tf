@@ -129,10 +129,6 @@ resource "helm_release" "grafana-k8s-monitoring" {
     value = "1"
   }
 
-  set {
-    name  = "alloy-logs.controller.type"
-    value = "deployment"
-  }
 
   set {
     name  = "alloy-logs.controller.replicas"
