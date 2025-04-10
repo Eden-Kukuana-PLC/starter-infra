@@ -45,6 +45,30 @@ resource "helm_release" "traefik" {
         }
       }
 
+      metrics = {
+        addInternals = true
+        otlp = {
+          enabled = true
+          http = {
+            enabled = true
+            endpoint = "http://grafana-k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local:4318/v1/metrics"
+            insecureSkipVerify = true
+          }
+        }
+      }
+
+      tracing = {
+        addInternals = true
+        otlp = {
+          enabled = true
+          http = {
+            enabled = true
+            endpoint = "http://grafana-k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local:4318/v1/traces"
+            insecureSkipVerify = true
+          }
+        }
+      }
+
 
       providers = {
         kubernetesCRD = {
