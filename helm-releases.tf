@@ -20,11 +20,7 @@ resource "helm_release" "traefik" {
             certResolver = "letsEncrypt"
           }
         }
-        tcppostgres = {
-          tls = {
-            enabled      = true
-            certResolver = "letsEncrypt"
-          }
+        postgres = {
           address = ":5432"
         }
 
@@ -32,6 +28,7 @@ resource "helm_release" "traefik" {
 
       additionalArguments = [
         "--api.insecure=true",
+        "--api.dashboard=true",
         "--serversTransport.insecureSkipVerify=true",
         "--tcpServersTransport.tls.insecureSkipVerify=true"
       ]
