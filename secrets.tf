@@ -1,5 +1,5 @@
 resource "kubernetes_secret" "github-container-registry" {
-  for_each   = toset(local.namepaces)
+  for_each = toset(local.namepaces)
 
   depends_on = [kubernetes_namespace.namespaces, null_resource.initialise_kubevela_environments]
 

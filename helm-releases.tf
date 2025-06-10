@@ -20,6 +20,14 @@ resource "helm_release" "traefik" {
             certResolver = "letsEncrypt"
           }
         }
+        tcppostgres = {
+          tls = {
+            enabled      = true
+            certResolver = "letsEncrypt"
+          }
+          address = ":5432"
+        }
+
       }
 
       additionalArguments = [
@@ -50,8 +58,8 @@ resource "helm_release" "traefik" {
         otlp = {
           enabled = true
           http = {
-            enabled = true
-            endpoint = "http://grafana-k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local:4318/v1/metrics"
+            enabled            = true
+            endpoint           = "http://grafana-k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local:4318/v1/metrics"
             insecureSkipVerify = true
           }
         }
@@ -62,8 +70,8 @@ resource "helm_release" "traefik" {
         otlp = {
           enabled = true
           http = {
-            enabled = true
-            endpoint = "http://grafana-k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local:4318/v1/traces"
+            enabled            = true
+            endpoint           = "http://grafana-k8s-monitoring-alloy-receiver.monitoring.svc.cluster.local:4318/v1/traces"
             insecureSkipVerify = true
           }
         }
@@ -77,10 +85,10 @@ resource "helm_release" "traefik" {
       }
 
       persistence = {
-        enabled      = true
-        size         = "128Mi"
-        name         = "success-factors"
-        path         = "/traefik/tls"
+        enabled = true
+        size    = "128Mi"
+        name    = "success-factors"
+        path    = "/traefik/tls"
       }
 
       securityContext = {
@@ -222,7 +230,7 @@ resource "helm_release" "grafana-k8s-monitoring" {
   set_sensitive {
     name  = "alloy-metrics.remoteConfig.auth.username"
     value = var.fleetmanagement_username
-    type = "string"
+    type  = "string"
   }
 
   set_sensitive {
@@ -238,7 +246,7 @@ resource "helm_release" "grafana-k8s-monitoring" {
   set_sensitive {
     name  = "alloy-singleton.remoteConfig.auth.username"
     value = var.fleetmanagement_username
-    type = "string"
+    type  = "string"
   }
 
   set_sensitive {
@@ -254,7 +262,7 @@ resource "helm_release" "grafana-k8s-monitoring" {
   set_sensitive {
     name  = "alloy-logs.remoteConfig.auth.username"
     value = var.fleetmanagement_username
-    type = "string"
+    type  = "string"
   }
 
   set_sensitive {
@@ -270,7 +278,7 @@ resource "helm_release" "grafana-k8s-monitoring" {
   set_sensitive {
     name  = "alloy-receiver.remoteConfig.auth.username"
     value = var.fleetmanagement_username
-    type = "string"
+    type  = "string"
   }
 
   set_sensitive {

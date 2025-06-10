@@ -34,7 +34,7 @@ variable "kubevela_core_version" {
 
 variable "kube_config_path" {
   description = "The absolute path to the kube config file."
-  type = string
+  type        = string
 }
 
 variable "grafana_helm_chart_version" {
@@ -106,31 +106,31 @@ variable "namespace" {
 }
 
 variable "cluster_name" {
-  type    = string
+  type = string
 }
 
 variable "destinations_prometheus_url" {
-  type    = string
+  type = string
 }
 
 variable "destinations_prometheus_username" {
-  type    = string
+  type = string
 }
 
 variable "destinations_prometheus_password" {
-  type    = string
+  type = string
 }
 
 variable "destinations_loki_url" {
-  type    = string
+  type = string
 }
 
 variable "destinations_loki_username" {
-  type    = string
+  type = string
 }
 
 variable "destinations_loki_password" {
-  type    = string
+  type = string
 }
 
 variable "destinations_otlp_url" {
@@ -144,7 +144,7 @@ variable "destinations_otlp_username" {
 }
 
 variable "destinations_otlp_password" {
-  type    = string
+  type = string
 }
 
 variable "fleetmanagement_url" {
@@ -158,5 +158,5 @@ variable "fleetmanagement_username" {
 }
 
 variable "fleetmanagement_password" {
-  type    = string
+  type = string
 }
