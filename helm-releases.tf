@@ -21,7 +21,7 @@ resource "helm_release" "traefik" {
           }
         }
         postgres = {
-          address = ":5432"
+          port = 5432
         }
 
       }
