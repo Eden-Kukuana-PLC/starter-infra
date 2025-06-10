@@ -33,6 +33,13 @@ resource "helm_release" "traefik" {
         "--tcpServersTransport.tls.insecureSkipVerify=true"
       ]
 
+      ingressRoute = {
+        dashboard = {
+          enabled = true
+          matchRule: "Host(`traefik.kukuana.com`)"
+        }
+      }
+
       autoscaling = {
         enabled     = true
         maxReplicas = 6
