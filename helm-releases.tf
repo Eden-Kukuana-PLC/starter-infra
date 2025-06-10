@@ -24,7 +24,7 @@ resource "helm_release" "traefik" {
           port = 5432
           exposedPort: 5432
           expose: true
-          protocol: TCP
+          protocol: "TCP"
         }
 
       }
