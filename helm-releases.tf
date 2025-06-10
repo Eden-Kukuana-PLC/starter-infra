@@ -22,6 +22,9 @@ resource "helm_release" "traefik" {
         }
         postgres = {
           port = 5432
+          exposedPort: 5432
+          expose: true
+          protocol: TCP
         }
 
       }
