@@ -39,7 +39,7 @@ resource "helm_release" "traefik" {
       ingressRoute = {
         dashboard = {
           enabled = true
-          matchRule: "Host(`traefik.kukuana.com`)"
+          matchRule = "Host(`traefik.kukuana.com`)"
         }
       }
 
